@@ -6,7 +6,8 @@
   request body:
     {
       email: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       password: string;
       avatar?: string;
     }
@@ -49,7 +50,8 @@
   response:
     {
       email: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       password: string;
       avatar: string;
     }
