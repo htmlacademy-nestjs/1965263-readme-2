@@ -1,4 +1,4 @@
-export interface User {
+export interface Post {
   _id: number;
   type: string;
   createdAt: string;
