@@ -14,6 +14,10 @@ export class UserEntity implements User {
   public postsCount: number;
   public subscribersCount: number;
 
+  constructor(user: User) {
+    this.fillEntity(user);
+  }
+
   public async setPassword(password: string): Promise<UserEntity> {
     const salt = await genSalt(SALT_ROUNDS);
     this.passwordHash = await hash(password, salt);
