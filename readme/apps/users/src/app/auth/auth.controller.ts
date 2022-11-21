@@ -1,4 +1,10 @@
-import { Controller } from '@nestjs/common';
+import {Controller, Get, HttpCode, HttpStatus} from '@nestjs/common';
 
 @Controller('auth')
-export class AuthController {}
+export class AuthController {
+  @Get('hello')
+  @HttpCode(HttpStatus.CONFLICT)
+  hello() {
+    return {'response': 'Hello!'};
+  }
+}
