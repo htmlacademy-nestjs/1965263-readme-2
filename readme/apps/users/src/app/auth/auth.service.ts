@@ -1,3 +1,4 @@
+import * as dayjs from 'dayjs';
 import {Injectable} from '@nestjs/common';
 import {UserMemoryRepository} from '../user/user-memory.repository';
 import {UserEntity} from '../user/user.entity';
@@ -17,8 +18,13 @@ export class AuthService {
       throw new Error('User with the email already exists!');
     }
 
-    const userEntity = new UserEntity({...dto, _id: '', passwordHash: '', createdAt: '', postsCount: 0, subscribersCount: 0});
-    await userEntity.setPassword(dto.password);
+    const userEntity = await new UserEntity({
+      ...dto, _id: '',
+      passwordHash: '',
+      createdAt: dayjs().toISOString(),
+      postsCount: 0,
+      subscribersCount: 0
+    }).setPassword(dto.password);
 
     return await this.userRepository.create(userEntity);
   }
@@ -38,7 +44,7 @@ export class AuthService {
       throw new Error('The provided password is incorrect!');
     }
 
-    return userEntity.toObject();
+    return await userEntity.toObject();
   }
 
   async getUser(id: string) {
