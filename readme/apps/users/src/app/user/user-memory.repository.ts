@@ -17,15 +17,15 @@ export class UserMemoryRepository implements CRUDRepository<UserEntity, string, 
   }
 
   public async create(item: UserEntity): Promise<User> {
-    const entry = {...item.toObject(), _id: crypto.randomUUID()};
-    this.repository[entry._id] = entry;
-    return {...entry};
+    const userEntry = {...item.toObject(), _id: crypto.randomUUID()};
+    this.repository[userEntry._id] = userEntry;
+    return {...userEntry};
   }
 
   public async update(id: string, item: UserEntity): Promise<User> {
-    const updatedEntry = {...item.toObject(), _id: id};
-    this.repository[id] = updatedEntry;
-    return {...updatedEntry};
+    const updatedUserEntry = {...item.toObject(), _id: id};
+    this.repository[id] = updatedUserEntry;
+    return {...updatedUserEntry};
   }
 
   public async destroy(id: string): Promise<void> {

@@ -3,7 +3,7 @@ import {Injectable} from '@nestjs/common';
 import {UserMemoryRepository} from '../user/user-memory.repository';
 import {UserEntity} from '../user/user.entity';
 import {CreateUserDto} from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
+import {LoginUserDto} from './dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +19,8 @@ export class AuthService {
     }
 
     const userEntity = await new UserEntity({
-      ...dto, _id: '',
+      ...dto,
+      _id: '',
       passwordHash: '',
       createdAt: dayjs().toISOString(),
       postsCount: 0,
