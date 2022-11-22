@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, Param, Patch, Post} from '@nestjs/common';
 import {fillObject} from '@readme/core';
 import {AuthService} from './auth.service';
 import {CreateUserDto} from './dto/create-user.dto';
@@ -28,5 +28,25 @@ export class AuthController {
   async show(@Param('id') id: string) {
     const existUser = await this.authService.getUser(id);
     return fillObject(UserRdo, existUser);
+  }
+
+  @Get('login')
+  async checkAuthStatus() {
+    throw new Error('"checkAuthenticate": Not implemented!')
+  }
+
+  @Patch('passchange')
+  async changePassword() {
+    throw new Error('"changePassword": Not implemented!')
+  }
+
+  @Post(':id/subscribe')
+  async subscribe(@Param('id') id: string) {
+    throw new Error(`"subscribe": Not implemented! ${id}`)
+  }
+
+  @Post(':id/unsubscribe')
+  async unsubscribe(@Param('id') id: string) {
+    throw new Error(`"unsubscribe": Not implemented! ${id}`)
   }
 }
