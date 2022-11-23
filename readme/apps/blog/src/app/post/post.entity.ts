@@ -1,4 +1,4 @@
-import {Post} from '@readme/shared-types';
+import {ContentType, Post} from '@readme/shared-types';
 
 export class PostEntity implements Post {
   public _id: number;
@@ -13,6 +13,7 @@ export class PostEntity implements Post {
   public authorId: string;
   public originalAuthorId: string;
   public originalId: number;
+  public content: ContentType;
 
   constructor(post: Post) {
     this.fillEntity(post);
@@ -35,5 +36,6 @@ export class PostEntity implements Post {
     this.authorId = post.authorId;
     this.originalAuthorId = post.originalAuthorId;
     this.originalId = post.originalId;
+    this.content = post.content;
   }
 }

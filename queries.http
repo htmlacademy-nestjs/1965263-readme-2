@@ -1,4 +1,7 @@
-POST http://localhost:3333/api/auth/register HTTP/1.1
+### ============================================= ПОЛЬЗОВАТЕЛИ ===================================================
+
+### Регистрация пользователя
+POST http://localhost:3330/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
@@ -7,11 +10,11 @@ Content-Type: application/json
   "lastName": "Asd",
   "password": "123456"
 }
-###
-GET http://localhost:3333/api/auth/393b40fc-a3cc-4ba6-b7ec-722e61c3eb6e HTTP/1.1
+### Получение детальной информации по id
+GET http://localhost:3330/api/auth/16a7ab7d-8e95-40c5-84f5-8c00c170a16b HTTP/1.1
 
-###
-POST http://localhost:3333/api/auth/login HTTP/1.1
+### Авторизация
+POST http://localhost:3330/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -19,11 +22,130 @@ Content-Type: application/json
   "password": "123456"
 }
 
-###
-POST http://localhost:3333/api/posts HTTP/1.1
+### =============================================== ПУБЛИКАЦИИ ===================================================
+
+### Запрос публикаций
+GET http://localhost:3331/api/posts HTTP/1.1
+
+### Запрос с параметром authorId
+GET http://localhost:3331/api/posts/?postsCount=5&authorId=3afa868f-e0d7-450d-bef5-101667e6b836 HTTP/1.1
+
+### Запрос с параметром tag
+GET http://localhost:3331/api/posts/?postsCount=5&tag=ert HTTP/1.1
+
+### Редактирование публикации
+PATCH http://localhost:3331/api/posts/1669229448421 HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "",
+    "announcement": "",
+    "text": ""
+  },
+  "tags": ["qwe", "ert", "zxc"],
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+}
+
+### Удаление публикации
+DELETE http://localhost:3331/api/posts/1669231925499 HTTP/1.1
+
+### Репост публикации
+POST http://localhost:3331/api/posts/repost/1669233968014 HTTP/1.1
+Content-Type: application/json
+
+{
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b888"
+}
+
+### Создание публикации типа video
+POST http://localhost:3331/api/posts HTTP/1.1
 Content-Type: application/json
 
 {
   "type": "video",
-  "tags": ["#qwe", "#asd", "#zxc"]
+  "content": {
+    "title": "Chill Music Lab",
+    "url": "https://www.youtube.com/watch?v=Q7t4JOt-KH4"
+  },
+  "tags": ["qwe", "asd", "zxc"],
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
 }
+
+### Создание публикации типа text
+POST http://localhost:3331/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "text",
+  "content": {
+    "title": "",
+    "announcement": "",
+    "text": ""
+  },
+  "tags": ["qwe", "ert", "zxc"],
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+}
+
+### Создание публикации типа quote
+POST http://localhost:3331/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "quote",
+  "content": {
+    "text": "",
+    "author": ""
+  },
+  "tags": ["qwe", "asd", "zxc"],
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+}
+
+### Создание публикации типа photo
+POST http://localhost:3331/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "photo",
+  "content": {
+    "image": ""
+  },
+  "tags": ["qwe", "asd", "zxc"],
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+}
+
+### Создание публикации типа link
+POST http://localhost:3331/api/posts HTTP/1.1
+Content-Type: application/json
+
+{
+  "type": "link",
+  "content": {
+    "url": "",
+    "description": ""
+  },
+  "tags": ["qwe", "asd", "zxc"],
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+}
+
+### =============================================== КОММЕНТАРИИ ==================================================
+
+### Добавление комментария
+POST http://localhost:3331/api/comments HTTP/1.1
+Content-Type: application/json
+
+{
+  "text": "Comment text",
+  "postId": 1669204984155,
+  "userId": "16a7ab7d-8e95-40c5-84f5-8c00c170a16b"
+}
+
+### Получение комментариев к публикации
+GET http://localhost:3331/api/comments/1669204984155 HTTP/1.1
+
+### Получение комментариев к публикации с параметром commentsCount
+GET http://localhost:3331/api/comments/1669204984155?commentsCount=2 HTTP/1.1
+
+### Удаление комментария
+DELETE http://localhost:3331/api/comments/1669217984202 HTTP/1.1

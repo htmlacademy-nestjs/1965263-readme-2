@@ -1,3 +1,4 @@
+import {ContentType} from '@readme/shared-types';
 import {Expose} from 'class-transformer';
 
 export class PostRdo {
@@ -32,8 +33,11 @@ export class PostRdo {
   public authorId: string;
 
   @Expose()
-  public originalAuthor: string;
+  public originalAuthorId: string;
 
   @Expose()
   public originalId: number;
+
+  @Expose()
+  public content: ContentType;
 }
