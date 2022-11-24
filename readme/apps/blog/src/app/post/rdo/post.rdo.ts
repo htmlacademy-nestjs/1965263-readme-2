@@ -15,16 +15,16 @@ export class PostRdo {
   public isPublished: boolean;
 
   @Expose()
-  public likesCount: number;
+  public likes: string[];
 
   @Expose()
   public commentsCount: number;
 
   @Expose()
-  public type: string
+  public type: string;
 
   @Expose()
-  public tags?: string[]
+  public tags?: string[];
 
   @Expose()
   public isRepost: boolean;

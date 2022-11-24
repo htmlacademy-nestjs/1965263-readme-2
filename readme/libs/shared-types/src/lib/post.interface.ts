@@ -23,7 +23,7 @@ type Link = {
   description?: string;
 }
 
-export type ContentType = Video | Text | Quote | Photo | Link;
+export type ContentType = Video | Text | Quote | Photo | Link; // реализовать на интерфейсах
 
 export interface Post {
   _id: number;
@@ -31,7 +31,7 @@ export interface Post {
   createdAt: string;
   date: string;
   isPublished: boolean;
-  likesCount: number;
+  likes: string[];
   commentsCount: number;
   tags?: string[];
   isRepost: boolean;

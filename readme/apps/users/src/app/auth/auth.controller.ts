@@ -18,7 +18,7 @@ export class AuthController {
     return fillObject(UserRdo, newUser);
   }
 
-  @Post('login')
+  @Post('login') // должно возвращать 200
   async login(@Body() dto: LoginUserDto) {
     const verifiedUser = await this.authService.verifyUser(dto);
     return fillObject(LoggedUserRdo, verifiedUser);

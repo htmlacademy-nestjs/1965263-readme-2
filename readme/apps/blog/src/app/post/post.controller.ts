@@ -1,5 +1,6 @@
 import {Body, Controller, Delete, Get, Param, Patch, Post, Query} from '@nestjs/common';
 import {fillObject} from '@readme/core';
+import {CommentService} from '../comment/comment.service';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
@@ -11,7 +12,8 @@ const MAX_POSTS_COUNT = 25;
 @Controller('posts')
 export class PostController {
   constructor(
-    private readonly postService: PostService
+    private readonly postService: PostService,
+    private commentService: CommentService
   ) {}
 
   @Post('')
@@ -38,15 +40,18 @@ export class PostController {
     @Body() dto: UpdatePostDto,
     @Param() {postId}
   ) {
-    const post = this.postService.updatePost(dto, Number(postId));
+    const post = await this.postService.updatePost(dto, Number(postId));
     return fillObject(PostRdo, post);
   }
   
   // Добавление/удаление лайков => инкремент/декремент
   // PATCH /posts/:id/like
   @Patch(':postId/like')
-  async smashLike(@Param() {postId}) {
-    const post = this.postService.changeLikesCount(Number(postId));
+  async smashLike(
+    @Param() {postId},
+    @Body() dto: RepostDto
+  ) {
+    const post = await this.postService.changeLikesCount(Number(postId), dto.authorId);
     return fillObject(PostRdo, post);
   }
   
@@ -54,7 +59,14 @@ export class PostController {
   // DELETE /posts/:id
   @Delete(':postId')
   async deletePost(@Param() {postId}) {
-    const post = this.postService.deletePost(Number(postId));
+    const comments = await this.commentService.getComments(Number(postId));
+    const commentsIds = comments.map((comment) => comment._id);
+
+    commentsIds.forEach((id) => {
+      this.commentService.deleteComment(id);
+    });
+  
+    const post = await this.postService.deletePost(Number(postId));
     return fillObject(PostRdo, post);
   }
   
@@ -65,7 +77,7 @@ export class PostController {
     @Param() {postId},
     @Body() dto: RepostDto
   ) {
-    const post = this.postService.repost(Number(postId), dto);
+    const post = await this.postService.repost(Number(postId), dto);
     return fillObject(PostRdo, post);
   }
 }

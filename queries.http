@@ -49,14 +49,22 @@ Content-Type: application/json
 }
 
 ### Удаление публикации
-DELETE http://localhost:3331/api/posts/1669231925499 HTTP/1.1
+DELETE http://localhost:3331/api/posts/1669292869059 HTTP/1.1
 
-### Репост публикации
-POST http://localhost:3331/api/posts/repost/1669233968014 HTTP/1.1
+### Лайк
+PATCH http://localhost:3331/api/posts/1669286219682/like HTTP/1.1
 Content-Type: application/json
 
 {
   "authorId": "3afa868f-e0d7-450d-bef5-101667e6b888"
+}
+
+### Репост публикации
+POST http://localhost:3331/api/posts/repost/1669286219682 HTTP/1.1
+Content-Type: application/json
+
+{
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b777"
 }
 
 ### Создание публикации типа video
@@ -137,15 +145,15 @@ Content-Type: application/json
 
 {
   "text": "Comment text",
-  "postId": 1669204984155,
+  "postId": 1669292869059,
   "userId": "16a7ab7d-8e95-40c5-84f5-8c00c170a16b"
 }
 
 ### Получение комментариев к публикации
-GET http://localhost:3331/api/comments/1669204984155 HTTP/1.1
+GET http://localhost:3331/api/comments/1669292869059 HTTP/1.1
 
 ### Получение комментариев к публикации с параметром commentsCount
 GET http://localhost:3331/api/comments/1669204984155?commentsCount=2 HTTP/1.1
 
 ### Удаление комментария
-DELETE http://localhost:3331/api/comments/1669217984202 HTTP/1.1
+DELETE http://localhost:3331/api/comments/1669292130209 HTTP/1.1

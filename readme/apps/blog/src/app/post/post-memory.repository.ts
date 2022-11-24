@@ -27,7 +27,6 @@ export class PostMemoryRepository implements CRUDRepository<PostEntity, number, 
   public async create(item: PostEntity): Promise<Post> {
     const postEntry = {...item.toObject(), _id: Number(dayjs())};
     this.repository[postEntry._id] = postEntry;
-    console.log(postEntry); // удалить
     return {...postEntry};
   }
 

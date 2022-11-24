@@ -20,11 +20,11 @@ export class CommentService {
     return await this.commentRepository.create(commentEntity);
   }
 
-  async getComments(postId: number, commentsCount: number) {
-    return this.commentRepository.findByPostId(postId, commentsCount);
+  async getComments(postId: number, commentsCount?: number) {
+    return await this.commentRepository.findByPostId(postId, commentsCount);
   }
 
   async deleteComment(commentId: number) {
-    this.commentRepository.destroy(commentId);
+    await this.commentRepository.destroy(commentId);
   }
 }
