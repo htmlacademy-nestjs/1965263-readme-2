@@ -9,7 +9,7 @@ export class UserEntity implements User {
   public firstName: string;
   public lastName: string;
   public passwordHash: string;
-  public avatar?: string;
+  public avatarPath?: string;
   public createdAt: string;
   public postsCount: number;
   public subscribersCount: number;
@@ -38,7 +38,7 @@ export class UserEntity implements User {
     this.firstName = user.firstName;
     this.lastName = user.lastName;
     this.passwordHash = user.passwordHash;
-    this.avatar = user.avatar;
+    this.avatarPath = user.avatarPath ?? '';
     this.createdAt = user.createdAt;
     this.postsCount = user.postsCount;
     this.subscribersCount = user.subscribersCount;

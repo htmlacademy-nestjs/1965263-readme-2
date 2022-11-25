@@ -4,9 +4,9 @@ export interface User {
   firstName: string;
   lastName: string;
   passwordHash: string;
-  avatar?: string;
+  avatarPath?: string;
   createdAt: string;
   postsCount: number;
   subscribersCount: number;
-  //likedPosts: string[];
+  //likedPosts: string[]; // айдишники понравившихся постов
 }

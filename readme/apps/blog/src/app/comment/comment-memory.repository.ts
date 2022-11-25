@@ -8,8 +8,8 @@ import {CommentEntity} from './comment.entity';
 export class CommentMemoryRepository implements CRUDRepository<CommentEntity, number, Comment> {
   private repository: {[key: number]: Comment} = {};
 
-  public async findByPostId(page: number, postId: number, commentsCount?: number): Promise<Comment[]> {
-    return commentsCount
+  public async findByPostId(postId: number, page?: number, commentsCount?: number): Promise<Comment[]> {
+    return commentsCount && page
              ? Object.values(this.repository)
                  .filter((comment) => comment.postId === postId)
                  .slice((page - 1) * commentsCount, commentsCount * page)
