@@ -5,6 +5,7 @@ import {CreateCommentDto} from './dto/create-comment.dto';
 import {CommentRdo} from './rdo/comment.rdo';
 
 const MAX_COMMENTS_COUNT = 50;
+const DEFAULT_PAGE = 1;
 
 @Controller('comments')
 export class CommentController {
@@ -19,13 +20,14 @@ export class CommentController {
   }
 
   @Get(':postId')
-  async getComments(@Query('commentsCount') commentsCount: number = MAX_COMMENTS_COUNT, @Param() {postId}) {
-    const comments = await this.commentService.getComments(Number(postId), Number(commentsCount));
+  async getComments(
+    @Query('page') page: number = DEFAULT_PAGE,
+    @Query('commentsCount') commentsCount: number = MAX_COMMENTS_COUNT,
+    @Param() {postId}
+  ) {
+    const comments = await this.commentService.getComments(page, Number(postId), Number(commentsCount));
     return fillObject(CommentRdo, comments);
   }
-
-  // Получение списка комментариев к публикации {следующие 50}
-  // GET /comments/:postId/more
 
   @Delete(':commentId')
   async deleteComment(@Param() {commentId}) {

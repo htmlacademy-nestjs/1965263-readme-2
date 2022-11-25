@@ -23,7 +23,6 @@ export class PostController {
     return fillObject(PostRdo, post);
   }
 
-  // Добавить пагинацию
   // Запрос публикаций, Запрос публикаций определённого юзера, Запрос публикаций по тегу {не более 25}
   @Get('')
   async getPosts(

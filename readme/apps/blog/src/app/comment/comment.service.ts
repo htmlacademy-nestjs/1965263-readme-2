@@ -20,8 +20,8 @@ export class CommentService {
     return await this.commentRepository.create(commentEntity);
   }
 
-  async getComments(postId: number, commentsCount?: number) {
-    return await this.commentRepository.findByPostId(postId, commentsCount);
+  async getComments(page: number, postId: number, commentsCount?: number) {
+    return await this.commentRepository.findByPostId(page, postId, commentsCount);
   }
 
   async deleteComment(commentId: number) {

@@ -10,14 +10,19 @@ export class PostMemoryRepository implements CRUDRepository<PostEntity, number, 
 
   public async find(page: number, postsCount: number, authorId?: string, tag?: string): Promise<Post[]> {
     if (authorId) {
-      return Object.values(this.repository).filter((post) => post.authorId === authorId).slice((page - 1) * page, postsCount * page);
+      return Object.values(this.repository)
+               .filter((post) => post.authorId === authorId)
+               .slice((page - 1) * postsCount, postsCount * page);
     }
 
     if (tag) {
-      return Object.values(this.repository).filter((post) => post.tags.includes(tag)).slice((page - 1) * page, postsCount * page);
+      return Object.values(this.repository)
+               .filter((post) => post.tags.includes(tag))
+               .slice((page - 1) * postsCount, postsCount * page);
     }
 
-    return Object.values(this.repository).slice((page - 1) * page, postsCount * page);
+    return Object.values(this.repository)
+             .slice((page - 1) * postsCount, postsCount * page);
   }
 
   public async findById(id: number): Promise<Post> {
