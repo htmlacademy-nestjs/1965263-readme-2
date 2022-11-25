@@ -8,6 +8,7 @@ import {PostService} from './post.service';
 import {PostRdo} from './rdo/post.rdo';
 
 const MAX_POSTS_COUNT = 25;
+const DEFAULT_PAGE = 1;
 
 @Controller('posts')
 export class PostController {
@@ -22,14 +23,16 @@ export class PostController {
     return fillObject(PostRdo, post);
   }
 
+  // Добавить пагинацию
   // Запрос публикаций, Запрос публикаций определённого юзера, Запрос публикаций по тегу {не более 25}
   @Get('')
   async getPosts(
+    @Query('page') page: number = DEFAULT_PAGE,
     @Query('postsCount') postsCount: number = MAX_POSTS_COUNT,
     @Query('authorId') authorId?: string,
     @Query('tag') tag?: string
   ) {
-    const posts = await this.postService.getPosts(postsCount, authorId, tag);
+    const posts = await this.postService.getPosts(page, postsCount, authorId, tag);
     return fillObject(PostRdo, posts);
   }
   

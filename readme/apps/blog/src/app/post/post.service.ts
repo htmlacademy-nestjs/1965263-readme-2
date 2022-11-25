@@ -45,8 +45,8 @@ export class PostService {
     return await this.postRepository.create(postEntity);
   }
 
-  async getPosts(postsCount: number, authorId?: string, tag?: string) {
-    return this.postRepository.find(postsCount, authorId, tag);
+  async getPosts(page: number, postsCount: number, authorId?: string, tag?: string) {
+    return this.postRepository.find(page, postsCount, authorId, tag);
   }
 
   async updatePost(dto: UpdatePostDto, postId: number) {

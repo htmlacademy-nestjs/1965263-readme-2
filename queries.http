@@ -27,6 +27,9 @@ Content-Type: application/json
 ### Запрос публикаций
 GET http://localhost:3331/api/posts HTTP/1.1
 
+### Запрос публикаций (пагинация)
+GET http://localhost:3331/api/posts?page=2&postsCount=2 HTTP/1.1
+
 ### Запрос с параметром authorId
 GET http://localhost:3331/api/posts/?postsCount=5&authorId=3afa868f-e0d7-450d-bef5-101667e6b836 HTTP/1.1
 
