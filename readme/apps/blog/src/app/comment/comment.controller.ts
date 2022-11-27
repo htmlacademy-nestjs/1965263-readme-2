@@ -37,7 +37,7 @@ export class CommentController {
   async getComments(
     @Query('page') page: number = DEFAULT_PAGE,
     @Query('commentsCount') commentsCount: number = MAX_COMMENTS_COUNT,
-    @Param() {postId}
+    @Param('postId') postId: number
   ) {
     const comments = await this.commentService.getComments(Number(postId), page, Number(commentsCount));
     return fillObject(CommentRdo, comments);
@@ -49,7 +49,9 @@ export class CommentController {
   })
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':commentId')
-  async deleteComment(@Param() {commentId}) {
+  async deleteComment(
+    @Param('commentId') commentId: number
+  ) {
     this.commentService.deleteComment(Number(commentId));
   }
 }

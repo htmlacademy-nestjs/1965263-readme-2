@@ -37,7 +37,7 @@ GET http://localhost:3331/api/posts/?postsCount=5&authorId=3afa868f-e0d7-450d-be
 GET http://localhost:3331/api/posts/?postsCount=5&tag=ert HTTP/1.1
 
 ### Редактирование публикации
-PATCH http://localhost:3331/api/posts/1669229448421 HTTP/1.1
+PATCH http://localhost:3331/api/posts/1669567308124 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -52,10 +52,10 @@ Content-Type: application/json
 }
 
 ### Удаление публикации
-DELETE http://localhost:3331/api/posts/1669401083934 HTTP/1.1
+DELETE http://localhost:3331/api/posts/1669567228439 HTTP/1.1
 
 ### Лайк
-PATCH http://localhost:3331/api/posts/1669286219682/like HTTP/1.1
+PATCH http://localhost:3331/api/posts/1669567228439/like HTTP/1.1
 Content-Type: application/json
 
 {
@@ -63,7 +63,7 @@ Content-Type: application/json
 }
 
 ### Репост публикации
-POST http://localhost:3331/api/posts/repost/1669286219682 HTTP/1.1
+POST http://localhost:3331/api/posts/repost/1669567100182 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -162,4 +162,4 @@ GET http://localhost:3331/api/comments/1669391408573?page=2&commentsCount=3 HTTP
 GET http://localhost:3331/api/comments/1669204984155?commentsCount=2 HTTP/1.1
 
 ### Удаление комментария
-DELETE http://localhost:3331/api/comments/1669292130209 HTTP/1.1
+DELETE http://localhost:3331/api/comments/1669567573643 HTTP/1.1

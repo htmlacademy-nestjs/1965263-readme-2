@@ -57,7 +57,7 @@ export class PostController {
   @HttpCode(HttpStatus.OK)
   async updatePost(
     @Body() dto: UpdatePostDto,
-    @Param() {postId}
+    @Param('postId') postId: number
   ) {
     const post = await this.postService.updatePost(dto, Number(postId));
     return fillObject(PostRdo, post);
@@ -71,7 +71,7 @@ export class PostController {
   @Patch(':postId/like')
   @HttpCode(HttpStatus.OK)
   async smashLike(
-    @Param() {postId},
+    @Param('postId') postId: number,
     @Body() dto: RepostDto
   ) {
     const post = await this.postService.changeLikesCount(Number(postId), dto.authorId);
@@ -84,15 +84,17 @@ export class PostController {
   })
   @Delete(':postId')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deletePost(@Param() {postId}) {
-    const comments = await this.commentService.getComments(Number(postId));
+  async deletePost(
+    @Param('postId') postId: number
+  ) {
+    const comments = await this.commentService.getComments(postId);
     const commentsIds = comments.map((comment) => comment._id);
 
     commentsIds.forEach((id) => {
       this.commentService.deleteComment(id);
     });
   
-    await this.postService.deletePost(Number(postId));
+    await this.postService.deletePost(postId);
   }
 
   @ApiResponse({
@@ -103,10 +105,10 @@ export class PostController {
   @Post('repost/:postId')
   @HttpCode(HttpStatus.OK)
   async repost(
-    @Param() {postId},
+    @Param('postId') postId: number,
     @Body() dto: RepostDto
   ) {
-    const post = await this.postService.repost(Number(postId), dto);
+    const post = await this.postService.repost(postId, dto);
     return fillObject(PostRdo, post);
   }
 }
