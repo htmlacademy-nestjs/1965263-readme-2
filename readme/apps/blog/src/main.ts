@@ -13,8 +13,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('The «Users» service')
-    .setDescription('Users service API')
+    .setTitle('The «Blog» service')
+    .setDescription('Blog service API')
     .setVersion('1.0')
     .build();
 
@@ -24,7 +24,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('spec', app, document);
 
-  const port = process.env.PORT || 3330;
+  const port = process.env.PORT || 3331;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
