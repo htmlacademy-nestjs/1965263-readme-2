@@ -1,6 +1,8 @@
 import {Module} from '@nestjs/common';
 import {ConfigModule} from '@nestjs/config';
+import {MongooseModule} from '@nestjs/mongoose';
 import databaseConfig from '../config/database.config';
+import {getMongoDbConfig} from '../config/mongodb.config';
 import {ENV_FILE_PATH} from './app.constant';
 import {AuthModule} from './auth/auth.module';
 import envSchema from './env.schema';
@@ -15,10 +17,13 @@ import {UserModule} from './user/user.module';
       load: [databaseConfig],
       validationSchema: envSchema
     }),
+    MongooseModule.forRootAsync(
+      getMongoDbConfig()
+    ),
     AuthModule,
     UserModule
   ],
   controllers: [],
-  providers: [],
+  providers: []
 })
 export class AppModule {}
