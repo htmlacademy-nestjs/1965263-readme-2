@@ -1,27 +1,15 @@
 import * as dayjs from 'dayjs';
-import {Inject, Injectable} from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {UserMemoryRepository} from '../user/user-memory.repository';
 import {UserEntity} from '../user/user.entity';
 import {CreateUserDto} from './dto/create-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
-import {ConfigType} from '@nestjs/config';
-import databaseConfig from '../../config/database.config';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userRepository: UserMemoryRepository,
-
-    @Inject(databaseConfig.KEY)
-    private readonly configService: ConfigType<typeof databaseConfig>
-  ) {
-    console.log(configService.port);
-    console.log(configService.databaseName);
-    console.log(configService.host);
-    console.log(configService.user);
-    console.log(configService.password);
-    console.log(configService.authBase);
-  }
+    private readonly userRepository: UserMemoryRepository
+  ) {}
 
   async register(dto: CreateUserDto) {
     const existingUser = await this.userRepository.findByEmail(dto.email);

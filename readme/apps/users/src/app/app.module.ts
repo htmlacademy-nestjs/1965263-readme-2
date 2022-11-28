@@ -3,6 +3,7 @@ import {ConfigModule} from '@nestjs/config';
 import databaseConfig from '../config/database.config';
 import {ENV_FILE_PATH} from './app.constant';
 import {AuthModule} from './auth/auth.module';
+import envSchema from './env.schema';
 import {UserModule} from './user/user.module';
 
 @Module({
@@ -11,7 +12,8 @@ import {UserModule} from './user/user.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig]
+      load: [databaseConfig],
+      validationSchema: envSchema
     }),
     AuthModule,
     UserModule
