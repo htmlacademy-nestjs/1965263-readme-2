@@ -9,7 +9,7 @@ export class UserEntity implements User {
   public firstName: string;
   public lastName: string;
   public passwordHash: string;
-  public avatarPath?: string;
+  public avatarPath: string;
   public createdAt: string;
   public postsCount: number;
   public subscribersCount: number;

@@ -28,6 +28,7 @@ export class PostController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() dto: CreatePostDto) {
     const post = await this.postService.createPost(dto);
+    // инкрементировать значение поля postsCount у юзера
     return fillObject(PostRdo, post);
   }
 
@@ -93,7 +94,7 @@ export class PostController {
     commentsIds.forEach((id) => {
       this.commentService.deleteComment(id);
     });
-  
+    // декрементировать значение поля postsCount у юзера
     await this.postService.deletePost(postId);
   }
 

@@ -1,14 +1,14 @@
 import * as dayjs from 'dayjs';
 import {Injectable} from '@nestjs/common';
-import {UserMemoryRepository} from '../user/user-memory.repository';
 import {UserEntity} from '../user/user.entity';
 import {CreateUserDto} from './dto/create-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
+import {UserRepository} from '../user/user.repository';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userRepository: UserMemoryRepository
+    private readonly userRepository: UserRepository
   ) {}
 
   async register(dto: CreateUserDto) {
@@ -20,7 +20,6 @@ export class AuthService {
 
     const userEntity = await new UserEntity({
       ...dto,
-      _id: '',
       passwordHash: '',
       createdAt: dayjs().toISOString(),
       postsCount: 0,
