@@ -22,7 +22,7 @@ model Post {
   tags               String[]
   isRepost           Boolean
   authorId           String
-  originalAuthorId   Boolean
+  originalAuthorId   String
   originalId         Int
   content            Json
 }
