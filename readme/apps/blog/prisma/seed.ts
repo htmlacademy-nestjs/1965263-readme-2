@@ -51,3 +51,4 @@ fillDb()
 
     process.exit(1);
   })
+  
