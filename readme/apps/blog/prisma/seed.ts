@@ -14,16 +14,18 @@ async function fillDb() {
         '3afa868f-e0d7-450d-bef5-101667e6b835',
         '3afa868f-e0d7-450d-bef5-101667e6b834'
       ],
-      comments: [
-        {
-          text: 'Comment text 1',
-          userId: '3afa868f-e0d7-450d-bef5-101667e6b835'
-        },
-        {
-          text: 'Comment text 2',
-          userId: '3afa868f-e0d7-450d-bef5-101667e6b834'
-        }
-      ],
+      comments: {
+        create: [
+          {
+            text: 'Comment text 1',
+            userId: '3afa868f-e0d7-450d-bef5-101667e6b835'
+          },
+          {
+            text: 'Comment text 2',
+            userId: '3afa868f-e0d7-450d-bef5-101667e6b834'
+          }
+        ]
+      },
       tags: ['qwe', 'asd', 'zxc'],
       isRepost: false,
       authorId: '3afa868f-e0d7-450d-bef5-101667e6b831',
