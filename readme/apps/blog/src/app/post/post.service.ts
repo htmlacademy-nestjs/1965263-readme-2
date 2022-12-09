@@ -3,13 +3,14 @@ import * as dayjs from 'dayjs';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
-import {PostMemoryRepository} from './post-memory.repository';
+//import {PostMemoryRepository} from './post-memory.repository';
+import {PostRepository} from './post.repository';
 import {PostEntity} from './post.entity';
 
 @Injectable()
 export class PostService {
   constructor(
-    private readonly postRepository: PostMemoryRepository
+    private readonly postRepository: PostRepository
   ) {}
 
   async createPost(dto: CreatePostDto) {
