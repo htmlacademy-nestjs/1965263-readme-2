@@ -16,12 +16,11 @@ model Post {
   type               String
   createdAt          DateTime @default(now())
   date               DateTime @default(now())
-  isPublished        Boolean @default(true)
+  isPublished        Boolean
   likes              String[] @default([])
   comments           Comment[]
-  commentsCount      Int @default(0)
   tags               String[]
-  isRepost           Boolean @default(false)
+  isRepost           Boolean
   authorId           String
   originalAuthorId   String
   originalId         Int

@@ -1,3 +1,6 @@
+import {Comment} from './comment.interface';
+import {Prisma} from '@prisma/client';
+
 interface Video {
   title: string;
   url: string;
@@ -23,7 +26,7 @@ interface Link {
   description?: string;
 }
 
-export type ContentType = Video | Text | Quote | Photo | Link;
+export type ContentType = Video | Text | Quote | Photo | Link | Prisma.JsonValue;
 
 export interface Post {
   id?: number;
@@ -32,7 +35,7 @@ export interface Post {
   date?: Date;
   isPublished?: boolean;
   likes?: string[];
-  commentsCount?: number;
+  comments?: Comment[];
   tags?: string[];
   isRepost?: boolean;
   authorId: string;
