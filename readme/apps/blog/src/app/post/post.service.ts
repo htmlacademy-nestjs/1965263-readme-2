@@ -1,9 +1,8 @@
 import {Injectable} from '@nestjs/common';
-import * as dayjs from 'dayjs';
+//import * as dayjs from 'dayjs';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
-//import {PostMemoryRepository} from './post-memory.repository';
 import {PostRepository} from './post.repository';
 import {PostEntity} from './post.entity';
 
@@ -16,15 +15,7 @@ export class PostService {
   async createPost(dto: CreatePostDto) {
     const postEntity = new PostEntity({
       ...dto,
-      _id: 0,
-      createdAt: dayjs().toISOString(),
-      date: dayjs().toISOString(),
-      isRepost: false,
-      isPublished: true,
-      likes: [],
-      commentsCount: 0,
-      originalAuthorId: '',
-      originalId: 0
+      originalAuthorId: dto.authorId
     });
 
     return await this.postRepository.create(postEntity);
@@ -33,11 +24,11 @@ export class PostService {
   async repost(postId: number, dto: RepostDto) {
     const post = await this.postRepository.findById(postId);
     const originalAuthorId = post.authorId;
-    const originalId = post._id;
+    const originalId = post.id;
     const postEntity = new PostEntity({
       ...post,
       authorId: dto.authorId,
-      date: dayjs().toISOString(),
+      date: new Date,
       isRepost: true,
       originalAuthorId,
       originalId
