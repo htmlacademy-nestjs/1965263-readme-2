@@ -76,6 +76,7 @@ Content-Type: application/json
 
 {
   "type": "video",
+  "isPublished": true,
   "content": {
     "title": "Chill Music Lab",
     "url": "https://www.youtube.com/watch?v=Q7t4JOt-KH4"

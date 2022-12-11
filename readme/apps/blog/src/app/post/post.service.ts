@@ -15,7 +15,9 @@ export class PostService {
   async createPost(dto: CreatePostDto) {
     const postEntity = new PostEntity({
       ...dto,
-      originalAuthorId: dto.authorId
+      isRepost: false,
+      originalAuthorId: dto.authorId,
+      originalId: 0
     });
 
     return await this.postRepository.create(postEntity);

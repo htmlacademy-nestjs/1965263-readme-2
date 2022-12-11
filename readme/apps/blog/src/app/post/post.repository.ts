@@ -3,6 +3,7 @@ import {CRUDRepository} from '@readme/core';
 import {Post} from '@readme/shared-types';
 import {PrismaService} from '../prisma/prisma.service';
 import {PostEntity} from './post.entity';
+import {Post as prisma_post} from '@prisma/client';
 
 @Injectable()
 export class PostRepository implements CRUDRepository<PostEntity, number, Post> {
@@ -31,7 +32,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     const entityData = item.toObject();
     const post = await this.prisma.post.create({
       data: {
-        ...entityData   
+        ...entityData as prisma_post
       }
     });
     console.log(entityData);
