@@ -64,7 +64,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
       },
       data: {
         ...entityData as prisma_post,
-        date: new Date
+        date: new Date // При установке/снятии лайков дата должна меняться?
       }
     });
   }

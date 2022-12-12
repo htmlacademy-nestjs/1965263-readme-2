@@ -36,7 +36,7 @@ export class PostEntity implements Entity<PostEntity>, Post {
     this.isRepost = post.isRepost ?? false;
     this.authorId = post.authorId;
     this.originalAuthorId = post.originalAuthorId;
-    this.originalId = 0;
+    this.originalId = post.originalId;
     this.content = post.content;
   }
 }

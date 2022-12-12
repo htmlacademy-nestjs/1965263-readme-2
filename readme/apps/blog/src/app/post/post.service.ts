@@ -27,11 +27,14 @@ export class PostService {
     const post = await this.postRepository.findById(postId);
     const originalAuthorId = post.authorId;
     const originalId = post.id;
+    console.log(originalId);
     const postEntity = new PostEntity({
       ...post,
       authorId: dto.authorId,
       date: new Date,
+      isPublished: true,
       isRepost: true,
+      likes: [],
       originalAuthorId,
       originalId
     });
