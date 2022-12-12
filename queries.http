@@ -37,18 +37,19 @@ GET http://localhost:3331/api/posts?postsCount=10&authorId=3afa868f-e0d7-450d-be
 GET http://localhost:3331/api/posts?postsCount=5&tag=ert HTTP/1.1
 
 ### Редактирование публикации
-PATCH http://localhost:3331/api/posts/1669567308124 HTTP/1.1
+PATCH http://localhost:3331/api/posts/28 HTTP/1.1
 Content-Type: application/json
 
 {
   "type": "text",
+  "isPublished": true,
   "content": {
-    "title": "",
-    "announcement": "",
-    "text": ""
+    "title": "fgh",
+    "announcement": "hjk",
+    "text": "vbn"
   },
-  "tags": ["qwe", "ert", "zxc"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+  "tags": ["ttt", "yyy", "uuiii"],
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b855"
 }
 
 ### Удаление публикации
