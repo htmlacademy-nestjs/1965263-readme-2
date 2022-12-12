@@ -37,7 +37,7 @@ GET http://localhost:3331/api/posts?postsCount=10&authorId=3afa868f-e0d7-450d-be
 GET http://localhost:3331/api/posts?postsCount=5&tag=ert HTTP/1.1
 
 ### Редактирование публикации
-PATCH http://localhost:3331/api/posts/28 HTTP/1.1
+PATCH http://localhost:3331/api/posts/27 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -49,18 +49,18 @@ Content-Type: application/json
     "text": "vbn"
   },
   "tags": ["ttt", "yyy", "uuiii"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b855"
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
 }
 
 ### Удаление публикации
 DELETE http://localhost:3331/api/posts/1669567228439 HTTP/1.1
 
 ### Лайк
-PATCH http://localhost:3331/api/posts/1669567228439/like HTTP/1.1
+PATCH http://localhost:3331/api/posts/27/like HTTP/1.1
 Content-Type: application/json
 
 {
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b888"
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b555"
 }
 
 ### Репост публикации

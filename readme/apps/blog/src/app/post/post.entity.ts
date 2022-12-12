@@ -30,7 +30,7 @@ export class PostEntity implements Entity<PostEntity>, Post {
     this.createdAt = undefined;
     this.date = undefined;
     this.isPublished = post.isPublished ?? false;
-    this.likes = undefined;
+    this.likes = post.likes;
     this.comments = undefined;
     this.tags = post.tags;
     this.isRepost = post.isRepost ?? false;

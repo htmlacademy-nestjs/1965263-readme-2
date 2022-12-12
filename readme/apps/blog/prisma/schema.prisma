@@ -17,7 +17,7 @@ model Post {
   createdAt          DateTime @default(now())
   date               DateTime @default(now())
   isPublished        Boolean
-  likes              String[] @default([])
+  likes              String[]
   comments           Comment[]
   tags               String[]
   isRepost           Boolean

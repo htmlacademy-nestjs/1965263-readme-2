@@ -57,6 +57,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
 
   public async update(id: number, item: PostEntity): Promise<Post> {
     const entityData = item.toObject();
+    console.log(entityData);
     return this.prisma.post.update({
       where: {
         id

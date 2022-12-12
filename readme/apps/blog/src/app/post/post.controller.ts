@@ -67,7 +67,7 @@ export class PostController {
   @ApiResponse({
     type: PostRdo,
     status: HttpStatus.OK,
-    description: 'The like was set'
+    description: 'The like was set (or unset)'
   })
   @Patch(':postId/like')
   @HttpCode(HttpStatus.OK)
