@@ -53,7 +53,7 @@ Content-Type: application/json
 }
 
 ### Удаление публикации
-DELETE http://localhost:3331/api/posts/1669567228439 HTTP/1.1
+DELETE http://localhost:3331/api/posts/29 HTTP/1.1
 
 ### Лайк
 PATCH http://localhost:3331/api/posts/27/like HTTP/1.1

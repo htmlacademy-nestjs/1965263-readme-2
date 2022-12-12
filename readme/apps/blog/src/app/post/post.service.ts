@@ -73,7 +73,7 @@ export class PostService {
     return await this.postRepository.update(postId, updatedPostEntity);
   }
 
-  async deletePost(postId) {
+  async deletePost(postId: number) {
     return await this.postRepository.destroy(postId);
   }
 }

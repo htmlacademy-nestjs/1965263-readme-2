@@ -102,7 +102,7 @@ export class PostController {
       this.commentService.deleteComment(id);
     });
     // декрементировать значение поля postsCount у юзера
-    await this.postService.deletePost(postId);
+    await this.postService.deletePost(Number(postId));
   }
 
   @ApiResponse({

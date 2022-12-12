@@ -38,7 +38,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
   }
 
   public async findById(id: number): Promise<Post | null> {
-    return this.prisma.post.findUnique({
+    return await this.prisma.post.findUnique({
       where: {
         id
       }
@@ -58,7 +58,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
   public async update(id: number, item: PostEntity): Promise<Post> {
     const entityData = item.toObject();
     console.log(entityData);
-    return this.prisma.post.update({
+    return await this.prisma.post.update({
       where: {
         id
       },
@@ -70,6 +70,10 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
   }
 
   public async destroy(id: number): Promise<void> {
-    throw new Error(`Method "destroy" not implemented ${id}`);
+    await this.prisma.post.delete({
+      where: {
+        id
+      }
+    });
   }
 }
