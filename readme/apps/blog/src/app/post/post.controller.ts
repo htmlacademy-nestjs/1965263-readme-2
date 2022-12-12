@@ -45,7 +45,7 @@ export class PostController {
     @Query('authorId') authorId?: string,
     @Query('tag') tag?: string
   ) {
-    const posts = await this.postService.getPosts(page, postsCount, authorId, tag);
+    const posts = await this.postService.getPosts(page, Number(postsCount), authorId, tag);
     return fillObject(PostRdo, posts);
   }
 

@@ -13,15 +13,28 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
 
   public async find(page: number, postsCount: number, authorId?: string, tag?: string) {
     const posts = await this.prisma.post.findMany({
+      where: (authorId || tag) && {
+        OR: [
+          {
+            authorId
+          },
+          {
+            tags: {
+              has: tag ?? null
+            }
+          }
+        ]
+      },
       include: {
         comments: true
       },
       take: postsCount,
-      skip: (page - 1) * postsCount
+      skip: (page - 1) * postsCount,
+      orderBy: {
+        date: 'asc',
+      }
     });
-    console.log(posts);
     return posts;
-    //throw new Error(`Method "find" not implemented ${page} ${postsCount} ${authorId} ${tag}`);
   }
 
   public async findById(id: number): Promise<Post | null> {
@@ -35,9 +48,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
         ...entityData as prisma_post
       }
     });
-    console.log(entityData);
     return post;
-    //throw new Error(`Method "create" not implemented ${item}`);
   }
 
   public async update(id: number, item: PostEntity): Promise<Post> {

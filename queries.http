@@ -28,13 +28,13 @@ Content-Type: application/json
 GET http://localhost:3331/api/posts HTTP/1.1
 
 ### Запрос публикаций (пагинация)
-GET http://localhost:3331/api/posts?page=2&postsCount=3 HTTP/1.1
+GET http://localhost:3331/api/posts?page=3&postsCount=3 HTTP/1.1
 
 ### Запрос с параметром authorId
-GET http://localhost:3331/api/posts/?postsCount=5&authorId=3afa868f-e0d7-450d-bef5-101667e6b836 HTTP/1.1
+GET http://localhost:3331/api/posts?postsCount=10&authorId=3afa868f-e0d7-450d-bef5-101667e6b888 HTTP/1.1
 
 ### Запрос с параметром tag
-GET http://localhost:3331/api/posts/?postsCount=5&tag=ert HTTP/1.1
+GET http://localhost:3331/api/posts?postsCount=5&tag=ert HTTP/1.1
 
 ### Редактирование публикации
 PATCH http://localhost:3331/api/posts/1669567308124 HTTP/1.1
@@ -91,13 +91,14 @@ Content-Type: application/json
 
 {
   "type": "text",
+  "isPublished": true,
   "content": {
     "title": "",
     "announcement": "",
     "text": ""
   },
   "tags": ["qwe", "ert", "zxc"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b888"
 }
 
 ### Создание публикации типа quote
@@ -106,6 +107,7 @@ Content-Type: application/json
 
 {
   "type": "quote",
+  "isPublished": true,
   "content": {
     "text": "",
     "author": ""
