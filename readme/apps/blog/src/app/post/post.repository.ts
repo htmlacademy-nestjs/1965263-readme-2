@@ -5,15 +5,32 @@ import {PrismaService} from '../prisma/prisma.service';
 import {PostEntity} from './post.entity';
 import {Post as prisma_post} from '@prisma/client';
 
+const SortTypeMap = { // в константы
+  'likes': {
+    likes: 'desc'
+  },
+  'comments': {
+    comments: {
+      _count: 'desc'
+    }
+  },
+  'date': {
+    date: 'desc'
+  }
+};
+
 @Injectable()
 export class PostRepository implements CRUDRepository<PostEntity, number, Post> {
   constructor(
     private readonly prisma: PrismaService
     ) {}
 
-  public async find(page: number, postsCount: number, authorId?: string, tag?: string)/* : Promise<Post[]> */ {
+  public async find(page: number, postsCount: number, sortType: string, authorId?: string, tag?: string): Promise<Post[]> {
     const posts = await this.prisma.post.findMany({
-      where: (authorId || tag) && {
+      where: (authorId || tag) ? {
+        isPublished: {
+          equals: true
+        },
         OR: [
           {
             authorId
@@ -24,15 +41,17 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
             }
           }
         ]
+      } : {
+        isPublished: {
+          equals: true
+        }
       },
       include: {
         comments: true
       },
       take: postsCount,
       skip: (page - 1) * postsCount,
-      orderBy: {
-        date: 'asc',
-      }
+      orderBy: SortTypeMap[sortType]
     });
     return posts;
   }
@@ -69,6 +88,11 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
   }
 
   public async destroy(id: number): Promise<void> {
+    await this.prisma.comment.deleteMany({ // как удалить комменты в связанной таблице?
+      where: {
+        postId: id
+      }
+    });
     await this.prisma.post.delete({
       where: {
         id

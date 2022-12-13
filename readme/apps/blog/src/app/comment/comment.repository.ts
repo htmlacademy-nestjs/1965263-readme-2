@@ -28,7 +28,7 @@ export class CommentRepository implements CRUDRepository<CommentEntity, number, 
       take: commentsCount,
       skip: (page - 1) * commentsCount,
       orderBy: {
-        createdAt: 'desc'  // проверить сортировку по ТЗ
+        createdAt: 'desc'
       }
     });
     return comments;

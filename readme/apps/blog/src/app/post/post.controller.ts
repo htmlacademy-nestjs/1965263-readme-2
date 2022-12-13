@@ -8,8 +8,14 @@ import {UpdatePostDto} from './dto/update-post.dto';
 import {PostService} from './post.service';
 import {PostRdo} from './rdo/post.rdo';
 
-const MAX_POSTS_COUNT = 25;
+const MAX_POSTS_COUNT = 25; // в константы
 const DEFAULT_PAGE = 1;
+
+const SortType = {
+  Likes: 'likes',
+  Comments: 'comments',
+  Default: 'date'
+};
 
 @ApiTags('posts')
 @Controller('posts')
@@ -42,17 +48,13 @@ export class PostController {
   async getPosts(
     @Query('page') page: number = DEFAULT_PAGE,
     @Query('postsCount') postsCount: number = MAX_POSTS_COUNT,
+    @Query('sortType') sortType: string = SortType.Default,
     @Query('authorId') authorId?: string,
     @Query('tag') tag?: string
   ) {
-    // 3.5. В список публикаций попадают только публикации в статусе «Опубликовано».
-    // 3.6. По умолчанию приложение возвращает список публикаций, отсортированных по дате публикации (по убыванию). Пользователь может передать дополнительные параметры в запрос и изменить вариант сортировки. Доступные варианты сортировки:
-    // Дата публикации (по убыванию). Вариант сортировки по умолчанию;
-    // Лайки (по убыванию). Публикации сортируются по количеству лайков. Сначала публикации с наибольшим количеством лайков.
-    // Обсуждаемые (по убыванию). Публикации сортируются по количеству комментариев. Сначала публикации с наибольшим количеством комментариев.
     // 3.8. Пользователь может запросить публикации определённого типа. Для этого он передаёт дополнительную информацию в запрос.
     // 3.9. Авторизованный пользователь может получить список своих черновиков (публикации в состоянии «Черновик»).
-    const posts = await this.postService.getPosts(page, Number(postsCount), authorId, tag);
+    const posts = await this.postService.getPosts(page, Number(postsCount), sortType, authorId, tag);
     return fillObject(PostRdo, posts);
   }
 
@@ -95,12 +97,6 @@ export class PostController {
   async deletePost(
     @Param('postId') postId: number
   ) {
-    /* const comments = await this.commentService.getComments(postId);
-    const commentsIds = comments.map((comment) => comment._id);
-
-    commentsIds.forEach((id) => {
-      this.commentService.deleteComment(id);
-    }); */
     // декрементировать значение поля postsCount у юзера
     await this.postService.deletePost(Number(postId));
   }

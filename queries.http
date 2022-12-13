@@ -27,17 +27,23 @@ Content-Type: application/json
 ### Запрос публикаций
 GET http://localhost:3331/api/posts HTTP/1.1
 
+### Запрос с сортировкой по лайкам
+GET http://localhost:3331/api/posts?sortType=likes HTTP/1.1
+
+### Запрос с сортировкой по комментам
+GET http://localhost:3331/api/posts?sortType=comments HTTP/1.1
+
 ### Запрос публикаций (пагинация)
 GET http://localhost:3331/api/posts?page=3&postsCount=3 HTTP/1.1
 
 ### Запрос с параметром authorId
-GET http://localhost:3331/api/posts?postsCount=10&authorId=3afa868f-e0d7-450d-bef5-101667e6b888 HTTP/1.1
+GET http://localhost:3331/api/posts?authorId=3afa868f-e0d7-450d-bef5-101667e6b444 HTTP/1.1
 
 ### Запрос с параметром tag
-GET http://localhost:3331/api/posts?postsCount=5&tag=ert HTTP/1.1
+GET http://localhost:3331/api/posts?postsCount=3&tag=ert HTTP/1.1
 
 ### Редактирование публикации
-PATCH http://localhost:3331/api/posts/27 HTTP/1.1
+PATCH http://localhost:3331/api/posts/42 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -53,22 +59,22 @@ Content-Type: application/json
 }
 
 ### Удаление публикации
-DELETE http://localhost:3331/api/posts/29 HTTP/1.1
+DELETE http://localhost:3331/api/posts/32 HTTP/1.1
 
 ### Лайк
-PATCH http://localhost:3331/api/posts/27/like HTTP/1.1
+PATCH http://localhost:3331/api/posts/30/like HTTP/1.1
 Content-Type: application/json
 
 {
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b555"
+  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b578"
 }
 
 ### Репост публикации
-POST http://localhost:3331/api/posts/repost/37 HTTP/1.1
+POST http://localhost:3331/api/posts/repost/34 HTTP/1.1
 Content-Type: application/json
 
 {
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b444"
+  "authorId": "6384f0dca6f361cbc1b80878"
 }
 
 ### Создание публикации типа video
@@ -83,7 +89,7 @@ Content-Type: application/json
     "url": "https://www.youtube.com/watch?v=Q7t4JOt-KH4"
   },
   "tags": ["qwe", "asd", "zxc"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+  "authorId": "6384ef2aa6f361cbc1b80873"
 }
 
 ### Создание публикации типа text
@@ -99,7 +105,7 @@ Content-Type: application/json
     "text": ""
   },
   "tags": ["qwe", "ert", "zxc"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b888"
+  "authorId": "6384ef2aa6f361cbc1b80873"
 }
 
 ### Создание публикации типа quote
@@ -114,7 +120,7 @@ Content-Type: application/json
     "author": ""
   },
   "tags": ["qwe", "asd", "zxc"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+  "authorId": "6384f0dca6f361cbc1b80878"
 }
 
 ### Создание публикации типа photo
@@ -127,7 +133,7 @@ Content-Type: application/json
     "image": ""
   },
   "tags": ["qwe", "asd", "zxc"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+  "authorId": "6384f4b25b814ae07c87f627"
 }
 
 ### Создание публикации типа link
@@ -141,7 +147,7 @@ Content-Type: application/json
     "description": ""
   },
   "tags": ["qwe", "asd", "zxc"],
-  "authorId": "3afa868f-e0d7-450d-bef5-101667e6b836"
+  "authorId": "6384f4b25b814ae07c87f627"
 }
 
 ### =============================================== КОММЕНТАРИИ ==================================================
@@ -151,8 +157,8 @@ POST http://localhost:3331/api/comments HTTP/1.1
 Content-Type: application/json
 
 {
-  "text": "Comment text 4",
-  "postId": 32,
+  "text": "Comment text 3",
+  "postId": 39,
   "userId": "6384f4b25b814ae07c87f627"
 }
 

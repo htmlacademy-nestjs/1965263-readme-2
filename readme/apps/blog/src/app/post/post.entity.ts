@@ -25,13 +25,9 @@ export class PostEntity implements Entity<PostEntity>, Post {
   }
 
   public fillEntity(post: Post) {
-    this.id = undefined;
     this.type = post.type;
-    this.createdAt = undefined;
-    this.date = undefined;
     this.isPublished = post.isPublished ?? false;
     this.likes = post.likes;
-    this.comments = undefined;
     this.tags = post.tags;
     this.isRepost = post.isRepost ?? false;
     this.authorId = post.authorId;
