@@ -50,11 +50,11 @@ export class PostController {
     @Query('postsCount') postsCount: number = MAX_POSTS_COUNT,
     @Query('sortType') sortType: string = SortType.Default,
     @Query('authorId') authorId?: string,
-    @Query('tag') tag?: string
+    @Query('tag') tag?: string,
+    @Query('type') type?: string
   ) {
-    // 3.8. Пользователь может запросить публикации определённого типа. Для этого он передаёт дополнительную информацию в запрос.
     // 3.9. Авторизованный пользователь может получить список своих черновиков (публикации в состоянии «Черновик»).
-    const posts = await this.postService.getPosts(page, Number(postsCount), sortType, authorId, tag);
+    const posts = await this.postService.getPosts(page, Number(postsCount), sortType, authorId, tag, type);
     return fillObject(PostRdo, posts);
   }
 

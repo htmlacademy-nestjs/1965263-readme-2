@@ -25,9 +25,16 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     private readonly prisma: PrismaService
     ) {}
 
-  public async find(page: number, postsCount: number, sortType: string, authorId?: string, tag?: string): Promise<Post[]> {
+  public async find(
+    page: number,
+    postsCount: number,
+    sortType: string,
+    authorId?: string,
+    tag?: string,
+    type?: string
+  ): Promise<Post[]> {
     const posts = await this.prisma.post.findMany({
-      where: (authorId || tag) ? {
+      where: (authorId || tag || type) ? {
         isPublished: {
           equals: true
         },
@@ -39,6 +46,9 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
             tags: {
               has: tag ?? null
             }
+          },
+          {
+            type
           }
         ]
       } : {
