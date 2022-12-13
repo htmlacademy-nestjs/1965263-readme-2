@@ -39,7 +39,7 @@ export class CommentController {
     @Query('commentsCount') commentsCount: number = MAX_COMMENTS_COUNT,
     @Param('postId') postId: number
   ) {
-    const comments = await this.commentService.getComments(Number(postId), page, Number(commentsCount));
+    const comments = await this.commentService.getComments(Number(postId), Number(page), Number(commentsCount));
     return fillObject(CommentRdo, comments);
   }
 

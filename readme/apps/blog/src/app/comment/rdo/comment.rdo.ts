@@ -6,7 +6,7 @@ export class CommentRdo {
     description: 'Comment ID',
     example: '1669401083934'
   })
-  @Expose({name: '_id'})
+  @Expose()
   public id: string;
 
   @ApiProperty({

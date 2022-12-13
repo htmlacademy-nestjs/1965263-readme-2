@@ -11,7 +11,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     private readonly prisma: PrismaService
     ) {}
 
-  public async find(page: number, postsCount: number, authorId?: string, tag?: string) {
+  public async find(page: number, postsCount: number, authorId?: string, tag?: string)/* : Promise<Post[]> */ {
     const posts = await this.prisma.post.findMany({
       where: (authorId || tag) && {
         OR: [
@@ -57,7 +57,6 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
 
   public async update(id: number, item: PostEntity): Promise<Post> {
     const entityData = item.toObject();
-    console.log(entityData);
     return await this.prisma.post.update({
       where: {
         id

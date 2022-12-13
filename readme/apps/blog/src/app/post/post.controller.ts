@@ -95,12 +95,12 @@ export class PostController {
   async deletePost(
     @Param('postId') postId: number
   ) {
-    const comments = await this.commentService.getComments(postId);
+    /* const comments = await this.commentService.getComments(postId);
     const commentsIds = comments.map((comment) => comment._id);
 
     commentsIds.forEach((id) => {
       this.commentService.deleteComment(id);
-    });
+    }); */
     // декрементировать значение поля postsCount у юзера
     await this.postService.deletePost(Number(postId));
   }
