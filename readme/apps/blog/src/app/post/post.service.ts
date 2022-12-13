@@ -14,8 +14,8 @@ export class PostService {
   async createPost(dto: CreatePostDto) {
     const postEntity = new PostEntity({
       ...dto,
+      date: new Date,
       likes: [],
-      isRepost: false,
       originalAuthorId: dto.authorId,
       originalId: 0
     });
@@ -50,7 +50,8 @@ export class PostService {
     const post = await this.postRepository.findById(postId);
     const postEntity = new PostEntity({
       ...post,
-      ...dto
+      ...dto,
+      date: new Date
     });
     return await this.postRepository.update(postId, postEntity);
   }

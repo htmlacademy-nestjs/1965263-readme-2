@@ -5,17 +5,9 @@ import {CommentService} from '../comment/comment.service';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
+import {MAX_POSTS_COUNT, DEFAULT_PAGE, SortType} from './post.constant';
 import {PostService} from './post.service';
 import {PostRdo} from './rdo/post.rdo';
-
-const MAX_POSTS_COUNT = 25; // в константы
-const DEFAULT_PAGE = 1;
-
-const SortType = {
-  Likes: 'likes',
-  Comments: 'comments',
-  Default: 'date'
-};
 
 @ApiTags('posts')
 @Controller('posts')

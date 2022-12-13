@@ -15,7 +15,7 @@ model Post {
   id                 Int @id @default(autoincrement())
   type               String
   createdAt          DateTime @default(now())
-  date               DateTime @default(now())
+  date               DateTime
   isPublished        Boolean
   likes              String[]
   comments           Comment[]

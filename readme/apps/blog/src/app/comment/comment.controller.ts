@@ -1,12 +1,10 @@
 import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from '@readme/core';
+import {MAX_COMMENTS_COUNT, DEFAULT_PAGE} from './comment.constant';
 import {CommentService} from './comment.service';
 import {CreateCommentDto} from './dto/create-comment.dto';
 import {CommentRdo} from './rdo/comment.rdo';
-
-const MAX_COMMENTS_COUNT = 50;
-const DEFAULT_PAGE = 1;
 
 @ApiTags('comments')
 @Controller('comments')

@@ -8,6 +8,7 @@ async function fillDb() {
     update: {},
     create: {
       type: 'video',
+      date: new Date,
       isPublished: true,
       likes: [
         '3afa868f-e0d7-450d-bef5-101667e6b836',

@@ -4,20 +4,7 @@ import {Post} from '@readme/shared-types';
 import {PrismaService} from '../prisma/prisma.service';
 import {PostEntity} from './post.entity';
 import {Post as prisma_post} from '@prisma/client';
-
-const SortTypeMap = { // в константы
-  'likes': {
-    likes: 'desc'
-  },
-  'comments': {
-    comments: {
-      _count: 'desc'
-    }
-  },
-  'date': {
-    date: 'desc'
-  }
-};
+import {SortTypeMap} from './post.constant';
 
 @Injectable()
 export class PostRepository implements CRUDRepository<PostEntity, number, Post> {
@@ -91,8 +78,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
         id
       },
       data: {
-        ...entityData as prisma_post,
-        date: new Date // При установке/снятии лайков дата должна меняться?
+        ...entityData as prisma_post
       }
     });
   }
