@@ -5,11 +5,9 @@ import {CommentService} from '../comment/comment.service';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
+import {MAX_POSTS_COUNT, DEFAULT_PAGE, SortType} from './post.constant';
 import {PostService} from './post.service';
 import {PostRdo} from './rdo/post.rdo';
-
-const MAX_POSTS_COUNT = 25;
-const DEFAULT_PAGE = 1;
 
 @ApiTags('posts')
 @Controller('posts')
@@ -42,10 +40,13 @@ export class PostController {
   async getPosts(
     @Query('page') page: number = DEFAULT_PAGE,
     @Query('postsCount') postsCount: number = MAX_POSTS_COUNT,
+    @Query('sortType') sortType: string = SortType.Default,
     @Query('authorId') authorId?: string,
-    @Query('tag') tag?: string
+    @Query('tag') tag?: string,
+    @Query('type') type?: string
   ) {
-    const posts = await this.postService.getPosts(page, postsCount, authorId, tag);
+    // 3.9. Авторизованный пользователь может получить список своих черновиков (публикации в состоянии «Черновик»).
+    const posts = await this.postService.getPosts(page, Number(postsCount), sortType, authorId, tag, type);
     return fillObject(PostRdo, posts);
   }
 
@@ -67,7 +68,7 @@ export class PostController {
   @ApiResponse({
     type: PostRdo,
     status: HttpStatus.OK,
-    description: 'The like was set'
+    description: 'The like was set (or unset)'
   })
   @Patch(':postId/like')
   @HttpCode(HttpStatus.OK)
@@ -88,14 +89,8 @@ export class PostController {
   async deletePost(
     @Param('postId') postId: number
   ) {
-    const comments = await this.commentService.getComments(postId);
-    const commentsIds = comments.map((comment) => comment._id);
-
-    commentsIds.forEach((id) => {
-      this.commentService.deleteComment(id);
-    });
     // декрементировать значение поля postsCount у юзера
-    await this.postService.deletePost(postId);
+    await this.postService.deletePost(Number(postId));
   }
 
   @ApiResponse({
@@ -109,7 +104,8 @@ export class PostController {
     @Param('postId') postId: number,
     @Body() dto: RepostDto
   ) {
-    const post = await this.postService.repost(postId, dto);
+    const post = await this.postService.repost(Number(postId), dto);
+    // инкрементировать значение поля postsCount у юзера ???
     return fillObject(PostRdo, post);
   }
 }

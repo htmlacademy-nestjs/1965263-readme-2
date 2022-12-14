@@ -1,28 +1,22 @@
 import {Injectable} from '@nestjs/common';
-import * as dayjs from 'dayjs';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
-import {PostMemoryRepository} from './post-memory.repository';
+import {PostRepository} from './post.repository';
 import {PostEntity} from './post.entity';
 
 @Injectable()
 export class PostService {
   constructor(
-    private readonly postRepository: PostMemoryRepository
+    private readonly postRepository: PostRepository
   ) {}
 
   async createPost(dto: CreatePostDto) {
     const postEntity = new PostEntity({
       ...dto,
-      _id: 0,
-      createdAt: dayjs().toISOString(),
-      date: dayjs().toISOString(),
-      isRepost: false,
-      isPublished: true,
+      date: new Date,
       likes: [],
-      commentsCount: 0,
-      originalAuthorId: '',
+      originalAuthorId: dto.authorId,
       originalId: 0
     });
 
@@ -32,12 +26,15 @@ export class PostService {
   async repost(postId: number, dto: RepostDto) {
     const post = await this.postRepository.findById(postId);
     const originalAuthorId = post.authorId;
-    const originalId = post._id;
+    const originalId = post.id;
+    console.log(originalId);
     const postEntity = new PostEntity({
       ...post,
       authorId: dto.authorId,
-      date: dayjs().toISOString(),
+      date: new Date,
+      isPublished: true,
       isRepost: true,
+      likes: [],
       originalAuthorId,
       originalId
     });
@@ -45,15 +42,16 @@ export class PostService {
     return await this.postRepository.create(postEntity);
   }
 
-  async getPosts(page: number, postsCount: number, authorId?: string, tag?: string) {
-    return this.postRepository.find(page, postsCount, authorId, tag);
+  async getPosts(page: number, postsCount: number, sortType: string, authorId?: string, tag?: string, type?: string) {
+    return this.postRepository.find(page, postsCount, sortType, authorId, tag, type);
   }
 
   async updatePost(dto: UpdatePostDto, postId: number) {
     const post = await this.postRepository.findById(postId);
     const postEntity = new PostEntity({
       ...post,
-      ...dto
+      ...dto,
+      date: new Date
     });
     return await this.postRepository.update(postId, postEntity);
   }
@@ -61,7 +59,7 @@ export class PostService {
   async changeLikesCount(postId: number, authorId: string) {
     const post = await this.postRepository.findById(postId);
     const postLikes = [...post.likes];
-    const existsLike = postLikes.find((id) => id === authorId);
+    const existsLike = postLikes.some((id) => id === authorId);
 
     if (existsLike) {
       const updatedLikes = postLikes.filter((id) => id !== authorId);
@@ -74,12 +72,9 @@ export class PostService {
     const updatedPost = {...post, likes: postLikes};
     const updatedPostEntity = new PostEntity(updatedPost);
     return await this.postRepository.update(postId, updatedPostEntity);
-
-    // если пользователь уже лайкал, то где хранить информацию об этом?
-    // обращаться к юзер сервису и проверять наличие id поста в поле "likedPosts: string[];" у юзера?
   }
 
-  async deletePost(postId) {
+  async deletePost(postId: number) {
     return await this.postRepository.destroy(postId);
   }
 }

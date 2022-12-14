@@ -1,13 +1,14 @@
-import {ContentType, Post} from '@readme/shared-types';
+import {Entity} from '@readme/core';
+import {Comment, ContentType, Post} from '@readme/shared-types';
 
-export class PostEntity implements Post {
-  public _id: number;
+export class PostEntity implements Entity<PostEntity>, Post {
+  public id: number;
   public type: string;
-  public createdAt: string;
-  public date: string;
+  public createdAt: Date;
+  public date: Date;
   public isPublished: boolean;
   public likes: string[];
-  public commentsCount: number;
+  public comments: Comment[];
   public tags?: string[];
   public isRepost: boolean;
   public authorId: string;
@@ -24,15 +25,12 @@ export class PostEntity implements Post {
   }
 
   public fillEntity(post: Post) {
-    this._id = post._id;
     this.type = post.type;
-    this.createdAt = post.createdAt;
     this.date = post.date;
-    this.isPublished = post.isPublished;
+    this.isPublished = post.isPublished ?? false;
     this.likes = post.likes;
-    this.commentsCount = post.commentsCount;
     this.tags = post.tags;
-    this.isRepost = post.isRepost;
+    this.isRepost = post.isRepost ?? false;
     this.authorId = post.authorId;
     this.originalAuthorId = post.originalAuthorId;
     this.originalId = post.originalId;

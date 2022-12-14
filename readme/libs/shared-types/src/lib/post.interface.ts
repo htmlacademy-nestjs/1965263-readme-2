@@ -1,42 +1,45 @@
-type Video = {
+import {Comment} from './comment.interface';
+import {Prisma} from '@prisma/client';
+
+interface Video {
   title: string;
   url: string;
 }
 
-type Text = {
+interface Text {
   title: string;
   announcement: string;
   text: string;
 }
 
-type Quote = {
+interface Quote {
   text: string;
   author: string;
 }
 
-type Photo = {
+interface Photo {
   image: string;
 }
 
-type Link = {
+interface Link {
   url: string;
   description?: string;
 }
 
-export type ContentType = Video | Text | Quote | Photo | Link; // реализовать на интерфейсах
+export type ContentType = Video | Text | Quote | Photo | Link | Prisma.JsonValue;
 
 export interface Post {
-  _id: number;
+  id?: number;
   type: string;
-  createdAt: string;
-  date: string;
-  isPublished: boolean;
-  likes: string[];
-  commentsCount: number;
+  createdAt?: Date;
+  date?: Date;
+  isPublished?: boolean;
+  likes?: string[];
+  comments?: Comment[];
   tags?: string[];
-  isRepost: boolean;
+  isRepost?: boolean;
   authorId: string;
-  originalAuthorId: string;
-  originalId: number;
+  originalAuthorId?: string;
+  originalId?: number;
   content: ContentType;
 }

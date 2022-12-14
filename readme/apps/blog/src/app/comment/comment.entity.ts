@@ -1,8 +1,8 @@
 import {Comment} from '@readme/shared-types';
 
 export class CommentEntity implements Comment {
-  public _id: number;
-  public createdAt: string;
+  public id: number;
+  public createdAt: Date;
   public text: string;
   public postId: number;
   public userId: string;
@@ -16,8 +16,6 @@ export class CommentEntity implements Comment {
   }
 
   public fillEntity(comment: Comment) {
-    this._id = comment._id;
-    this.createdAt = comment.createdAt;
     this.text = comment.text;
     this.postId = comment.postId;
     this.userId = comment.userId;

@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {ContentType} from '@readme/shared-types';
+import {Comment, ContentType} from '@readme/shared-types';
 import {Expose} from 'class-transformer';
 
 export class PostRdo {
@@ -7,7 +7,7 @@ export class PostRdo {
     description: 'Post ID',
     example: '1669401083934'
   })
-  @Expose({name: '_id'})
+  @Expose()
   public id: string;
 
   @ApiProperty({
@@ -37,13 +37,6 @@ export class PostRdo {
   })
   @Expose()
   public likes: string[];
-
-  @ApiProperty({
-    description: 'The number of likes',
-    example: '100'
-  })
-  @Expose()
-  public commentsCount: number;
 
   @ApiProperty({
     description: 'Must be one of the following types: video, text, quote, photo, link',
@@ -93,4 +86,11 @@ export class PostRdo {
   })
   @Expose()
   public content: ContentType;
+
+  @ApiProperty({
+    description: 'The array of comments',
+    example: 'Look the Comment interface'
+  })
+  @Expose()
+  public comments: Comment[];
 }

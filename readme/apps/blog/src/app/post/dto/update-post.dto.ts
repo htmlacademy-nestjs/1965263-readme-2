@@ -9,6 +9,12 @@ export class UpdatePostDto {
   type?: string;
 
   @ApiProperty({
+    description: 'The status, indicating whether the post was published',
+    example: 'true'
+  })
+  isPublished?: boolean;
+
+  @ApiProperty({
     description: 'The unique set of properies according to the "type"',
     example: 'Look the "ContentType"'
   })
