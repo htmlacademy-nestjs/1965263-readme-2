@@ -1,6 +1,7 @@
 import {Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from '@readme/core';
+import {MongoIdValidationPipe} from '../pipes/mongoid-validation.pipe';
 import {AuthService} from './auth.service';
 import {CreateUserDto} from './dto/create-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
@@ -39,7 +40,7 @@ export class AuthController {
   })
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async show(@Param('id') id: string) {
+  async show(@Param('id', MongoIdValidationPipe) id: string) {
     const existUser = await this.authService.getUser(id);
     return fillObject(UserRdo, existUser);
   }
