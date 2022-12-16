@@ -1,7 +1,7 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
+import {Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from '@readme/core';
-import {CommentService} from '../comment/comment.service';
+//import {CommentService} from '../comment/comment.service';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
@@ -14,7 +14,7 @@ import {PostRdo} from './rdo/post.rdo';
 export class PostController {
   constructor(
     private readonly postService: PostService,
-    private commentService: CommentService
+    //private commentService: CommentService
   ) {}
 
   @ApiResponse({
@@ -38,15 +38,15 @@ export class PostController {
   @Get('')
   @HttpCode(HttpStatus.OK)
   async getPosts(
-    @Query('page') page: number = DEFAULT_PAGE,
-    @Query('postsCount') postsCount: number = MAX_POSTS_COUNT,
-    @Query('sortType') sortType: string = SortType.Default,
+    @Query('page', new DefaultValuePipe(DEFAULT_PAGE)) page: number,
+    @Query('postsCount', new DefaultValuePipe(MAX_POSTS_COUNT)) postsCount: number,
+    @Query('sortType', new DefaultValuePipe(SortType.Default)) sortType: string,
     @Query('authorId') authorId?: string,
     @Query('tag') tag?: string,
     @Query('type') type?: string
   ) {
     // 3.9. Авторизованный пользователь может получить список своих черновиков (публикации в состоянии «Черновик»).
-    const posts = await this.postService.getPosts(page, Number(postsCount), sortType, authorId, tag, type);
+    const posts = await this.postService.getPosts(page, postsCount, sortType, authorId, tag, type);
     return fillObject(PostRdo, posts);
   }
 
@@ -61,7 +61,7 @@ export class PostController {
     @Body() dto: UpdatePostDto,
     @Param('postId') postId: number
   ) {
-    const post = await this.postService.updatePost(dto, Number(postId));
+    const post = await this.postService.updatePost(dto, postId);
     return fillObject(PostRdo, post);
   }
 
@@ -76,7 +76,7 @@ export class PostController {
     @Param('postId') postId: number,
     @Body() dto: RepostDto
   ) {
-    const post = await this.postService.changeLikesCount(Number(postId), dto.authorId);
+    const post = await this.postService.changeLikesCount(postId, dto.authorId);
     return fillObject(PostRdo, post);
   }
 
@@ -90,7 +90,7 @@ export class PostController {
     @Param('postId') postId: number
   ) {
     // декрементировать значение поля postsCount у юзера
-    await this.postService.deletePost(Number(postId));
+    await this.postService.deletePost(postId);
   }
 
   @ApiResponse({
@@ -104,7 +104,7 @@ export class PostController {
     @Param('postId') postId: number,
     @Body() dto: RepostDto
   ) {
-    const post = await this.postService.repost(Number(postId), dto);
+    const post = await this.postService.repost(postId, dto);
     // инкрементировать значение поля postsCount у юзера ???
     return fillObject(PostRdo, post);
   }
