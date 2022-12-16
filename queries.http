@@ -166,10 +166,10 @@ Content-Type: application/json
 }
 
 ### Получение комментариев к публикации
-GET http://localhost:3331/api/comments/59 HTTP/1.1
+GET http://localhost:3331/api/comments/60 HTTP/1.1
 
 ### Получение комментариев к публикации (пагинация)
-GET http://localhost:3331/api/comments/59?page=2&commentsCount=2 HTTP/1.1
+GET http://localhost:3331/api/comments/60?page=2&commentsCount=1 HTTP/1.1
 
 ### Получение комментариев к публикации с параметром commentsCount
 GET http://localhost:3331/api/comments/32?commentsCount=3 HTTP/1.1

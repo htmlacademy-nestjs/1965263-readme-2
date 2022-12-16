@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Query} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from '@readme/core';
 import {MAX_COMMENTS_COUNT, DEFAULT_PAGE} from './comment.constant';
@@ -33,11 +33,11 @@ export class CommentController {
   @Get(':postId')
   @HttpCode(HttpStatus.OK)
   async getComments(
-    @Query('page') page: number = DEFAULT_PAGE,
-    @Query('commentsCount') commentsCount: number = MAX_COMMENTS_COUNT,
-    @Param('postId') postId: number
+    @Query('page') page: number = DEFAULT_PAGE, // здесь ParseIntPipe не работает при запросе всех комментов к публикации
+    @Query('commentsCount') commentsCount: number = MAX_COMMENTS_COUNT, // здесь ParseIntPipe не работает при запросе всех комментов к публикации
+    @Param('postId', ParseIntPipe) postId: number
   ) {
-    const comments = await this.commentService.getComments(Number(postId), Number(page), Number(commentsCount));
+    const comments = await this.commentService.getComments(postId, Number(page), Number(commentsCount));
     return fillObject(CommentRdo, comments);
   }
 
