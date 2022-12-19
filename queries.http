@@ -37,7 +37,7 @@ GET http://localhost:3331/api/posts?sortType=comments HTTP/1.1
 GET http://localhost:3331/api/posts?page=3&postsCount=3 HTTP/1.1
 
 ### Запрос с параметром authorId
-GET http://localhost:3331/api/posts?authorId=3afa868f-e0d7-450d-bef5-101667e6b444 HTTP/1.1
+GET http://localhost:3331/api/posts?authorId=6398ab2b5a6c4e3fefe83773 HTTP/1.1
 
 ### Запрос с параметром tag
 GET http://localhost:3331/api/posts?tag=ert HTTP/1.1

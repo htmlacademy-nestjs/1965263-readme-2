@@ -1,12 +1,13 @@
-import {Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from '@readme/core';
 //import {CommentService} from '../comment/comment.service';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
-import {MAX_POSTS_COUNT, DEFAULT_PAGE, SortType} from './post.constant';
+import {MAX_POSTS_COUNT} from './post.constant';
 import {PostService} from './post.service';
+import { PostQuery } from './query/post.query';
 import {PostRdo} from './rdo/post.rdo';
 
 @ApiTags('posts')
@@ -37,16 +38,9 @@ export class PostController {
   })
   @Get('')
   @HttpCode(HttpStatus.OK)
-  async getPosts(
-    @Query('page', new DefaultValuePipe(DEFAULT_PAGE)) page: number,
-    @Query('postsCount', new DefaultValuePipe(MAX_POSTS_COUNT)) postsCount: number,
-    @Query('sortType', new DefaultValuePipe(SortType.Default)) sortType: string,
-    @Query('authorId') authorId?: string,
-    @Query('tag') tag?: string,
-    @Query('type') type?: string
-  ) {
+  async getPosts(@Query() query: PostQuery) {
     // 3.9. Авторизованный пользователь может получить список своих черновиков (публикации в состоянии «Черновик»).
-    const posts = await this.postService.getPosts(page, postsCount, sortType, authorId, tag, type);
+    const posts = await this.postService.getPosts(query);
     return fillObject(PostRdo, posts);
   }
 
