@@ -5,6 +5,7 @@ import {PrismaService} from '../prisma/prisma.service';
 import {PostEntity} from './post.entity';
 import {Post as prisma_post} from '@prisma/client';
 import {SortTypeMap} from './post.constant';
+import {PostQuery} from './query/post.query';
 
 @Injectable()
 export class PostRepository implements CRUDRepository<PostEntity, number, Post> {
@@ -12,14 +13,7 @@ export class PostRepository implements CRUDRepository<PostEntity, number, Post> 
     private readonly prisma: PrismaService
     ) {}
 
-  public async find(
-    page: number,
-    postsCount: number,
-    sortType: string,
-    authorId?: string,
-    tag?: string,
-    type?: string
-  ): Promise<Post[]> {
+  public async find({page, postsCount, sortType, authorId, tag, type}: PostQuery): Promise<Post[]> {
     const posts = await this.prisma.post.findMany({
       where: (authorId || tag || type) ? {
         isPublished: {

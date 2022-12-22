@@ -4,6 +4,7 @@ import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
 import {PostRepository} from './post.repository';
 import {PostEntity} from './post.entity';
+import {PostQuery} from './query/post.query';
 
 @Injectable()
 export class PostService {
@@ -42,8 +43,8 @@ export class PostService {
     return await this.postRepository.create(postEntity);
   }
 
-  async getPosts(page: number, postsCount: number, sortType: string, authorId?: string, tag?: string, type?: string) {
-    return this.postRepository.find(page, postsCount, sortType, authorId, tag, type);
+  async getPosts(query: PostQuery) {
+    return this.postRepository.find(query);
   }
 
   async updatePost(dto: UpdatePostDto, postId: number) {

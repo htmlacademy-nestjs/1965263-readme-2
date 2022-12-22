@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
+import {Body, Controller, DefaultValuePipe, Delete, Get, HttpCode, HttpStatus, Param, Post, Query} from '@nestjs/common';
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
 import {fillObject} from '@readme/core';
 import {MAX_COMMENTS_COUNT, DEFAULT_PAGE} from './comment.constant';
@@ -33,11 +33,11 @@ export class CommentController {
   @Get(':postId')
   @HttpCode(HttpStatus.OK)
   async getComments(
-    @Query('page') page: number = DEFAULT_PAGE,
-    @Query('commentsCount') commentsCount: number = MAX_COMMENTS_COUNT,
+    @Query('page', new DefaultValuePipe(DEFAULT_PAGE)) page: number,
+    @Query('commentsCount', new DefaultValuePipe(MAX_COMMENTS_COUNT)) commentsCount: number,
     @Param('postId') postId: number
   ) {
-    const comments = await this.commentService.getComments(Number(postId), Number(page), Number(commentsCount));
+    const comments = await this.commentService.getComments(postId, page, commentsCount);
     return fillObject(CommentRdo, comments);
   }
 
@@ -50,6 +50,6 @@ export class CommentController {
   async deleteComment(
     @Param('commentId') commentId: number
   ) {
-    this.commentService.deleteComment(Number(commentId));
+    this.commentService.deleteComment(commentId);
   }
 }
