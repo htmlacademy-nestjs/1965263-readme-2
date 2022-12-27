@@ -2,6 +2,7 @@ version: '3.5'
 services:
   rabbitmq:
     image: rabbitmq:3.11-management
+    container_name: rabbitmq
     restart: always
     ports:
       - '5672:5672'
@@ -14,4 +15,13 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  fakesmtp:
+    image: gessnerfl/fake-smtp-server
+    container_name: fakesmtp
+    restart: always
+    hostname: fakesmtp
+    ports:
+      - '5025:5025'
+      - '8084:5080'
       
