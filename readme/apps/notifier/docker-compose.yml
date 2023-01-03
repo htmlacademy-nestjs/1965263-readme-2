@@ -27,13 +27,14 @@ services:
 
   mongodb:
     image: mongo
-    container_name: readme.notifier.mongodb
+    restart: always
+    container_name: mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: test
       MONGO_INITDB_DATABASE: readme-notifier
     ports:
-      - 27018:27017
+      - 27017:27017
     volumes:
       - ./db:/data/db
     healthcheck:
@@ -44,9 +45,10 @@ services:
 
   mongodb-express:
     image: mongo-express
-    container_name: readme.notifier.mongo-express
+    restart: always
+    container_name: mongo-express-notifier
     ports:
-      - 8085:8081
+      - 8080:8081
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: test

@@ -5,7 +5,9 @@ import {EMAIL_ADD_SUBSCRIBER_SUBJECT} from './mail.constant';
 
 @Injectable()
 export class MailService {
-  constructor(private readonly mailerService: MailerService) {}
+  constructor(
+    private readonly mailerService: MailerService
+  ) {}
 
   public async sendNotifyNewSubscriber(subscriber: Subscriber) {
     await this.mailerService.sendMail({
