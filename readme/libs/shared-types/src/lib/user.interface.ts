@@ -8,5 +8,4 @@ export interface User {
   createdAt?: string;
   postsCount: number;
   subscribersCount: number;
-  //likedPosts: string[]; // айдишники понравившихся постов
 }
