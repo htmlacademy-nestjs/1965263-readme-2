@@ -47,11 +47,6 @@ export class AuthController {
     return fillObject(UserRdo, existUser);
   }
 
-  @Get('login')
-  async checkAuthStatus() {
-    throw new Error('"checkAuthenticate": Not implemented!')
-  }
-
   @Patch('passchange')
   async changePassword() {
     throw new Error('"changePassword": Not implemented!')

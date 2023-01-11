@@ -1,15 +1,19 @@
-import {Injectable} from '@nestjs/common';
+import {Inject, Injectable} from '@nestjs/common';
 import {CreatePostDto} from './dto/create-post.dto';
 import {RepostDto} from './dto/repost.dto';
 import {UpdatePostDto} from './dto/update-post.dto';
 import {PostRepository} from './post.repository';
 import {PostEntity} from './post.entity';
 import {PostQuery} from './query/post.query';
+import {CommandEvent} from '@readme/shared-types';
+import {RABBITMQ_SERVICE} from './post.constant';
+import {ClientProxy} from '@nestjs/microservices';
 
 @Injectable()
 export class PostService {
   constructor(
-    private readonly postRepository: PostRepository
+    private readonly postRepository: PostRepository,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy
   ) {}
 
   async createPost(dto: CreatePostDto) {
@@ -20,6 +24,13 @@ export class PostService {
       originalAuthorId: dto.authorId,
       originalId: 0
     });
+
+    this.rabbitClient.emit(
+      {cmd: CommandEvent.AddPost},
+      {
+        id: postEntity.toObject().authorId
+      }
+    );
 
     return await this.postRepository.create(postEntity);
   }
