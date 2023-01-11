@@ -1,17 +1,20 @@
 import * as dayjs from 'dayjs';
-import {Injectable, UnauthorizedException} from '@nestjs/common';
+import {Inject, Injectable, UnauthorizedException} from '@nestjs/common';
 import {UserEntity} from '../user/user.entity';
 import {CreateUserDto} from './dto/create-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
 import {UserRepository} from '../user/user.repository';
 import {JwtService} from '@nestjs/jwt';
-import {User} from '@readme/shared-types';
+import {CommandEvent, User} from '@readme/shared-types';
+import {RABBITMQ_SERVICE} from './auth.constant';
+import {ClientProxy} from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy
   ) {}
 
   async register(dto: CreateUserDto) {
@@ -29,7 +32,19 @@ export class AuthService {
       subscribersCount: 0
     }).setPassword(dto.password);
 
-    return await this.userRepository.create(userEntity);
+    const createdUser = await this.userRepository.create(userEntity)
+
+    this.rabbitClient.emit(
+      {cmd: CommandEvent.AddSubscriber},
+      {
+        email: createdUser.email,
+        firstname: createdUser.firstName,
+        lastname: createdUser.lastName,
+        userId: createdUser._id.toString()
+      }
+    );
+
+    return createdUser;
   }
 
   async verifyUser(dto: LoginUserDto) {
