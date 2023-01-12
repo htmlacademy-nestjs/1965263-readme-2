@@ -17,6 +17,11 @@ export class EmailSubscriberRepository implements CRUDRepository<EmailSubscriber
     return newEmailSubscriber.save();
   }
 
+  // реализовать выборку по подпискам
+  public async find(): Promise<Subscriber[]> {
+    return this.emailSubscriberModel.find({ /* subscriptions: id */ }).exec(); // выборка всех записей из БД
+  }
+
   public async findById(id: string): Promise<Subscriber | null> {
     return this.emailSubscriberModel.findById(id);
   }

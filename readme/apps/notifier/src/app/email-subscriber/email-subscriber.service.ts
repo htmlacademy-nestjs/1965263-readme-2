@@ -22,6 +22,13 @@ export class EmailSubscriberService {
 
     this.mailService.sendNotifyNewSubscriber(subscriber);
 
-    return this.emailSubscriberRepository.create(new EmailSubscriberEntity(subscriber));
+    return await this.emailSubscriberRepository.create(new EmailSubscriberEntity(subscriber));
+  }
+
+  public async addPost(/* id: string */) {
+    const users = await this.emailSubscriberRepository.find();
+    const emails = users.map((user) => user.email);
+    
+    return this.mailService.sendNotifyNewPost(emails);
   }
 }
