@@ -8,7 +8,7 @@ import {UserService} from './user.service';
 
 @Module({
   imports: [MongooseModule.forFeature([
-    { name: UserModel.name, schema: UserSchema }
+    {name: UserModel.name, schema: UserSchema}
   ])],
   controllers: [UserController],
   providers: [UserService, UserMemoryRepository, UserRepository],

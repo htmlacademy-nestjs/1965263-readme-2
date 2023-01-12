@@ -5,9 +5,9 @@ POST http://localhost:3330/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "fgh@tyu.com",
-  "firstName": "fgh",
-  "lastName": "tyu",
+  "email": "mikhail@sakharov.com",
+  "firstName": "mikhail",
+  "lastName": "sakharov",
   "password": "123456"
 }
 ### Получение детальной информации по id
@@ -19,9 +19,13 @@ POST http://localhost:3330/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "qwe@asd.com",
+  "email": "mikhail@sakharov.com",
   "password": "123456"
 }
+
+### Подписка на пользователя
+POST http://localhost:3330/api/auth/63c0643ea074395b7d391c82/subscribe HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2MwNjQzZWEwNzQzOTViN2QzOTFjODIiLCJlbWFpbCI6Im1pa2hhaWxAc2FraGFyb3YuY29tIiwiZmlyc3RuYW1lIjoibWlraGFpbCIsImxhc3RuYW1lIjoic2FraGFyb3YiLCJpYXQiOjE2NzM1NTMxMDMsImV4cCI6MTY3MzU1MzE2M30.ODBNlXhBsaSBvIa7emFjfok3GeTxgaDZhtefchTJsFY
 
 ### =============================================== ПУБЛИКАЦИИ ===================================================
 
@@ -93,7 +97,7 @@ Content-Type: application/json
     "url": "https://www.youtube.com/watch?v=Q7t4JOt-KH4"
   },
   "tags": ["qwe", "asd", "zxc"],
-  "authorId": "6398ab2b5a6c4e3fefe83771"
+  "authorId": "63c011443ef866d3e8f67d6c"
 }
 
 ### Создание публикации типа text

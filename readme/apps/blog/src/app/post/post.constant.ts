@@ -21,3 +21,5 @@ export const SortTypeMap = {
     date: 'desc'
   }
 };
+
+export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');

@@ -1,17 +1,20 @@
 import * as dayjs from 'dayjs';
-import {Injectable, UnauthorizedException} from '@nestjs/common';
+import {Inject, Injectable, UnauthorizedException} from '@nestjs/common';
 import {UserEntity} from '../user/user.entity';
 import {CreateUserDto} from './dto/create-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
 import {UserRepository} from '../user/user.repository';
 import {JwtService} from '@nestjs/jwt';
-import {User} from '@readme/shared-types';
+import {CommandEvent, User} from '@readme/shared-types';
+import {RABBITMQ_SERVICE} from './auth.constant';
+import {ClientProxy} from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy
   ) {}
 
   async register(dto: CreateUserDto) {
@@ -26,10 +29,24 @@ export class AuthService {
       passwordHash: '',
       createdAt: dayjs().toISOString(),
       postsCount: 0,
-      subscribersCount: 0
+      subscribersCount: 0,
+      subscribersEmails: []
     }).setPassword(dto.password);
 
-    return await this.userRepository.create(userEntity);
+    const createdUser = await this.userRepository.create(userEntity)
+
+    this.rabbitClient.emit(
+      {cmd: CommandEvent.AddSubscriber},
+      {
+        email: createdUser.email,
+        firstName: createdUser.firstName,
+        lastName: createdUser.lastName,
+        userId: createdUser._id.toString(),
+        subscribersIds: []
+      }
+    );
+
+    return createdUser;
   }
 
   async verifyUser(dto: LoginUserDto) {
@@ -59,11 +76,29 @@ export class AuthService {
     };
 
     return {
-      accessToken: await this.jwtService.signAsync(payload), // access_token
+      accessToken: await this.jwtService.signAsync(payload)
     };
   }
 
   async getUser(id: string) {
     return this.userRepository.findById(id);
+  }
+
+  async toggleSubscriberStatus(id: string, email: string) {
+    const user = await this.getUser(id);
+    const subscribersEmails = [...user.subscribersEmails];
+    const existsSuscriber = subscribersEmails.some((subscriberEmail) => subscriberEmail === email);
+
+    if (existsSuscriber) {
+      const updatedSubscribersEmails = subscribersEmails.filter((subscriberEmail) => subscriberEmail !== email);
+      const updatedUser = {...user, subscribersEmails: updatedSubscribersEmails};
+      const updatedUserEntity = new UserEntity(updatedUser);
+      return await this.userRepository.update(id, updatedUserEntity);
+    }
+
+    subscribersEmails.push(email);
+    const updatedUser = {...user, subscribersEmails};
+    const updatedUserEntity = new UserEntity(updatedUser);
+    return await this.userRepository.update(id, updatedUserEntity);
   }
 }

@@ -1,11 +1,11 @@
-import {ConfigService, registerAs}  from '@nestjs/config';
+import {ConfigService, registerAs} from '@nestjs/config';
 import {RmqOptions, Transport} from '@nestjs/microservices';
 
 export const rabbitMqOptions = registerAs('rmq', () => ({
   user: process.env.RABBIT_USER,
   password: process.env.RABBIT_PASSWORD,
   host: process.env.RABBIT_HOST,
-  queue: process.env.RABBIT_NOTIFIER_SERVICE_QUEUE
+  queue: process.env.RABBIT_BLOG_SERVICE_QUEUE
 }));
 
 export function getRabbitMqConfig(configService: ConfigService): RmqOptions {
