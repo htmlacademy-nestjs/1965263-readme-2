@@ -38,8 +38,8 @@ export class AuthService {
       {cmd: CommandEvent.AddSubscriber},
       {
         email: createdUser.email,
-        firstname: createdUser.firstName,
-        lastname: createdUser.lastName,
+        firstName: createdUser.firstName,
+        lastName: createdUser.lastName,
         userId: createdUser._id.toString()
       }
     );
