@@ -1,4 +1,4 @@
-import {IsEmail, IsNotEmpty} from 'class-validator';
+import {IsArray, IsEmail, IsNotEmpty} from 'class-validator';
 import {EMAIL_NOT_VALID, FIRST_NAME_IS_EMPTY, LAST_NAME_IS_EMPTY, USER_ID_IS_EMPTY} from '../email-subscriber.constant';
 
 export class CreateSubscriberDto {
@@ -13,4 +13,7 @@ export class CreateSubscriberDto {
 
   @IsNotEmpty({message: USER_ID_IS_EMPTY})
   userId: string;
+
+  @IsArray()
+  subscribersIds: string[];
 }

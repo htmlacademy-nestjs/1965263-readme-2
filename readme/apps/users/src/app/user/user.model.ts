@@ -42,6 +42,9 @@ export class UserModel extends Document implements User {
     required: true
   })
   public subscribersCount: number;
+
+  @Prop()
+  public subscribersEmails: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

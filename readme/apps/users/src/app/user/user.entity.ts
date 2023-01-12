@@ -13,6 +13,7 @@ export class UserEntity implements User {
   public createdAt: string;
   public postsCount: number;
   public subscribersCount: number;
+  public subscribersEmails: string[];
 
   constructor(user: User) {
     this.fillEntity(user);
@@ -42,5 +43,6 @@ export class UserEntity implements User {
     this.createdAt = user.createdAt;
     this.postsCount = user.postsCount;
     this.subscribersCount = user.subscribersCount;
+    this.subscribersEmails = user.subscribersEmails;
   }
 }

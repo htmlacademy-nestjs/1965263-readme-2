@@ -29,7 +29,8 @@ export class AuthService {
       passwordHash: '',
       createdAt: dayjs().toISOString(),
       postsCount: 0,
-      subscribersCount: 0
+      subscribersCount: 0,
+      subscribersEmails: []
     }).setPassword(dto.password);
 
     const createdUser = await this.userRepository.create(userEntity)
@@ -40,7 +41,8 @@ export class AuthService {
         email: createdUser.email,
         firstName: createdUser.firstName,
         lastName: createdUser.lastName,
-        userId: createdUser._id.toString()
+        userId: createdUser._id.toString(),
+        subscribersIds: []
       }
     );
 
@@ -80,5 +82,23 @@ export class AuthService {
 
   async getUser(id: string) {
     return this.userRepository.findById(id);
+  }
+
+  async toggleSubscriberStatus(id: string, email: string) {
+    const user = await this.getUser(id);
+    const subscribersEmails = [...user.subscribersEmails];
+    const existsSuscriber = subscribersEmails.some((subscriberEmail) => subscriberEmail === email);
+
+    if (existsSuscriber) {
+      const updatedSubscribersEmails = subscribersEmails.filter((subscriberEmail) => subscriberEmail !== email);
+      const updatedUser = {...user, subscribersEmails: updatedSubscribersEmails};
+      const updatedUserEntity = new UserEntity(updatedUser);
+      return await this.userRepository.update(id, updatedUserEntity);
+    }
+
+    subscribersEmails.push(email);
+    const updatedUser = {...user, subscribersEmails};
+    const updatedUserEntity = new UserEntity(updatedUser);
+    return await this.userRepository.update(id, updatedUserEntity);
   }
 }
