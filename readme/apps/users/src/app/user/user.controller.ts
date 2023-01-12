@@ -9,7 +9,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService
   ) {}
-  @EventPattern({cmd: CommandEvent.AddPost})
+  @EventPattern({cmd: CommandEvent.IncrementPostsCount})
   async incrementPostsCount({id}: IncrementPostsCountDto) {
     return await this.userService.incrementPostsCount(id);
   }

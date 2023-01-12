@@ -32,6 +32,13 @@ export class PostService {
       }
     );
 
+    this.rabbitClient.emit(
+      {cmd: CommandEvent.IncrementPostsCount},
+      {
+        id: dto.authorId
+      }
+    );
+
     return await this.postRepository.create(postEntity);
   }
 
