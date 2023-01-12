@@ -28,7 +28,7 @@ export class PostService {
     this.rabbitClient.emit(
       {cmd: CommandEvent.AddPost},
       {
-        id: postEntity.toObject().authorId
+        id: dto.authorId
       }
     );
 
